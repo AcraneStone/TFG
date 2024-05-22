@@ -8,6 +8,7 @@ public class CitySO : ScriptableObject
 {
     public InventoryServiceSO services;
     public double luck;
+    public double luckTime;
     public int AlmacenCount;
     public string cityName;
     public bool entrancePaid = false;
@@ -15,6 +16,12 @@ public class CitySO : ScriptableObject
     //Ayuntamiento
     public double impuestos_arrendados = 0;
     public double time_impuestos;
+
+    //Banca
+    public double dinero_prestado = 0;
+    public double time_prestamo;
+
+
 }
 
 

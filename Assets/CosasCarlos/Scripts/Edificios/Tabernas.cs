@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
+using static UnityEngine.Rendering.DebugUI;
 
 public enum TabernasUI
 {
@@ -13,17 +16,15 @@ public enum TabernasUI
     Soldados = 4
 }
 
-public class Tabernas : MonoBehaviour
+public class Tabernas : Building
 {
     [SerializeField]
     InventoryProductSO inventario;
-    CitySO city;
     //[SerializeField]
     /*ublic currencySO currencyPlayer;*/
 
-    public PlayerSO player;
 
-    public CityStatsSO citystats;
+    CityStatsSO citystats;
 
     public RowProductComercio rowComprar;
 
@@ -31,11 +32,12 @@ public class Tabernas : MonoBehaviour
 
 
     public ComercioView posadaView; 
-    public ComercioView tripulacionView;
+    public ComercioView marinerosView;
     public ComercioView soldadosView;
 
     public ComercioView comercioView;
     public CustomButton closeButton;
+    public HooverView hooverView;
     public View modalView;
     private TabernasUI layer = TabernasUI.None;
 
@@ -47,12 +49,39 @@ public class Tabernas : MonoBehaviour
     }
     public void Start()
     {
+        base.Start();
+        string sceneName = SceneManager.GetActiveScene().name;
+        string cityName = sceneName + "_Stats.asset";
+        citystats = AssetDatabase.LoadAssetAtPath<CityStatsSO>("Assets/CosasCarlos/Scriptable Objects/CityStats/" + cityName);
+        Debug.Log(cityName);
+        closeButton.onClick.AddListener(delegate { exitView(); });
+        //scroll = comercioView.transform.Find("scrollContent");
+
+        CustomButton[] posadaButtons = posadaView.GetComponentsInChildren<CustomButton>();
+        posadaButtons[0].onClick.AddListener(delegate { showSoldados(); });
+        posadaButtons[1].onClick.AddListener(delegate { showTripulantes(); });
+        posadaButtons[2].onClick.AddListener(delegate { AccionComprar(); });
+
+        ProductsSO soldado = AssetDatabase.LoadAssetAtPath<ProductsSO>("Assets/CosasCarlos/Scriptable Objects/Items/Products/Soldados.asset");
+        CustomButton[] soldadoButtons = soldadosView.GetComponentsInChildren<CustomButton>();
+        soldadoButtons[0].onClick.AddListener(delegate { ComprarUno(soldado); });
+        soldadoButtons[1].onClick.AddListener(delegate { ComprarCinco(soldado); });
+        soldadoButtons[2].onClick.AddListener(delegate { ComprarDiez(soldado); });
+
+        ProductsSO marinero = AssetDatabase.LoadAssetAtPath<ProductsSO>("Assets/CosasCarlos/Scriptable Objects/Items/Products/Marineros.asset");
+        CustomButton[] marineroButtons = marinerosView.GetComponentsInChildren<CustomButton>();
+        marineroButtons[0].onClick.AddListener(delegate { ComprarUno(marinero); });
+        marineroButtons[1].onClick.AddListener(delegate { ComprarCinco(marinero); });
+        marineroButtons[2].onClick.AddListener(delegate { ComprarDiez(marinero); });
+
+
         posadaView.gameObject.SetActive(false);
         comercioView.gameObject.SetActive(false);
         soldadosView.gameObject.SetActive(false);
-        tripulacionView.gameObject.SetActive(false);
+        marinerosView.gameObject.SetActive(false);
         modalView.gameObject.SetActive(false);
         closeButton.gameObject.SetActive(false);
+        hooverView.gameObject.SetActive(false);
         layer = TabernasUI.None;
     }
 
@@ -74,7 +103,7 @@ public class Tabernas : MonoBehaviour
     public void showTripulantes()
     {
         posadaView.gameObject.SetActive(false);
-        tripulacionView.gameObject.SetActive(true) ;
+        marinerosView.gameObject.SetActive(true) ;
         layer = TabernasUI.Tripulacion;
     }
 
@@ -96,8 +125,10 @@ public class Tabernas : MonoBehaviour
         modalView.gameObject.SetActive(false);
     }
 
+   
 
-    public void ExitView()
+
+    public void exitView()
     {
 
         if (layer == TabernasUI.Tabernas)
@@ -115,7 +146,7 @@ public class Tabernas : MonoBehaviour
         }
         else if (layer == TabernasUI.Tripulacion)
         {
-            tripulacionView.gameObject.SetActive(false);
+            marinerosView.gameObject.SetActive(false);
             posadaView.gameObject.SetActive(true);
             layer = TabernasUI.Tripulacion;
         }
@@ -136,11 +167,14 @@ public class Tabernas : MonoBehaviour
 
         if (found != null)
         {
-            if (found.stackSize > 1 && player.playerCurrency.CurrencyQuantity >= found.precio)
+            CityStatsSO.Pair pair = citystats.GetPair(item);
+            float price = setPrecioCompra(pair);
+            if (found.stackSize > 1 && player.playerCurrency.CurrencyQuantity >= price)
             {
+                Debug.Log(price);
                 player.playerInventory.Add(found.itemInventory);
                 inventario.Remove(item);
-                player.playerCurrency.CurrencyQuantity -= found.precio;
+                player.playerCurrency.CurrencyQuantity -= price;
             }
             else
             {
@@ -149,7 +183,7 @@ public class Tabernas : MonoBehaviour
                     modalView.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "No hay suficientes " + item.name;
                     showModal();
                 }
-                else if (player.playerCurrency.CurrencyQuantity < (found.precio * 1))
+                else if (player.playerCurrency.CurrencyQuantity < (price * 1))
                 {
                     modalView.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "No tienes suficiente oro";
                     showModal();
@@ -165,11 +199,14 @@ public class Tabernas : MonoBehaviour
 
         if (found != null)
         {
-            if (found.stackSize > 1 && player.playerCurrency.CurrencyQuantity >= found.precio)
+
+            CityStatsSO.Pair pair = citystats.GetPair(item);
+            float price = setPrecioCompra(pair);
+            if (found.stackSize > 1 && player.playerCurrency.CurrencyQuantity >= price)
             {
                 player.playerInventory.Add(found.itemInventory);
                 inventario.Remove(item);
-                player.playerCurrency.CurrencyQuantity -= found.precio;
+                player.playerCurrency.CurrencyQuantity -= price;
             }
             else
             {
@@ -178,7 +215,7 @@ public class Tabernas : MonoBehaviour
                     modalView.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "No hay suficientes " + item.name;
                     showModal();
                 }
-                else if (player.playerCurrency.CurrencyQuantity < (found.precio * 1))
+                else if (player.playerCurrency.CurrencyQuantity < (price * 1))
                 {
                     modalView.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "No tienes suficiente oro";
                     showModal();
@@ -193,11 +230,14 @@ public class Tabernas : MonoBehaviour
 
         if (found != null)
         {
-            if (found.stackSize >= 5 && player.playerCurrency.CurrencyQuantity >= (found.precio*5))
+
+            CityStatsSO.Pair pair = citystats.GetPair(item);
+            float price = setPrecioCompra(pair);
+            if (found.stackSize >= 5 && player.playerCurrency.CurrencyQuantity >= (price*5))
             {
                 player.playerInventory.Add(found.itemInventory, 5);
                 inventario.Remove(item, 5);
-                player.playerCurrency.CurrencyQuantity -= (found.precio*5);
+                player.playerCurrency.CurrencyQuantity -= (price*5);
             }
             else
             {
@@ -205,7 +245,7 @@ public class Tabernas : MonoBehaviour
                 {
                     modalView.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "No hay suficientes "+item.name;
                     showModal();
-                }else if(player.playerCurrency.CurrencyQuantity < (found.precio * 5))
+                }else if(player.playerCurrency.CurrencyQuantity < (price * 5))
                 {
                     modalView.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "No tienes suficiente oro";
                     showModal();
@@ -219,11 +259,13 @@ public class Tabernas : MonoBehaviour
 
         if (found != null)
         {
-            if (found.stackSize > 10 && player.playerCurrency.CurrencyQuantity >= (found.precio * 10))
+            CityStatsSO.Pair pair = citystats.GetPair(item);
+            float price = setPrecioVenta(pair);
+            if (found.stackSize > 10 && player.playerCurrency.CurrencyQuantity >= (price * 10))
             {
                 player.playerInventory.Add(found.itemInventory, 10);
                 inventario.Remove(item, 10);
-                player.playerCurrency.CurrencyQuantity -= (found.precio * 10);
+                player.playerCurrency.CurrencyQuantity -= (price * 10);
             }
             else
             {
@@ -232,7 +274,7 @@ public class Tabernas : MonoBehaviour
                     modalView.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "No hay suficientes " + item.name;
                     showModal();
                 }
-                else if (player.playerCurrency.CurrencyQuantity < (found.precio * 10))
+                else if (player.playerCurrency.CurrencyQuantity < (price * 10))
                 {
                     modalView.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "No tienes suficiente oro";
                     showModal();
@@ -252,15 +294,15 @@ public class Tabernas : MonoBehaviour
 
         foreach (var serial in inventario.inventoryList)
         {
-            //GameObject newRow = Instantiate(rowPrefab, scroll);
             RowProductComercio obj = Instantiate(rowComprar, scroll);
-            //obj.comercio = this;
+            obj.hooverView = hooverView;
             obj.product = serial.itemInventory;
+            obj.taberna = this;
             CityStatsSO.Pair pair = citystats.GetPair(obj.product);
-            Debug.Log("Hola");
             obj.transform.SetParent(scroll, false);
             obj.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = serial.itemInventory.ItemName;
-            obj.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = setPrecioCompra(pair).ToString();
+            obj.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().text = setPrecioCompra(pair).ToString("F2");
+            obj.GetComponentInChildren<CustomButton>().GetComponentInChildren<TextMeshProUGUI>().text = "Comprar";
         }
     }
 
@@ -322,14 +364,16 @@ public class Tabernas : MonoBehaviour
             default:
                 break;
         }
-
-        return precioFinal * percentage;
+        //float final_price = precioFinal * percentage * 100;
+        //int aux = (int)final_price;
+        //final_price = aux / 100;
+        return (float)Math.Truncate(precioFinal * percentage * 100) / 100;
     }
 
 
     public float setPrecioCompra(CityStatsSO.Pair pair)
     {
         float precio = setPrecioVenta(pair);
-        return precio * 1.25f;
+        return (float)Math.Truncate(precio * 1.25f * 100) / 100;
     }
 }

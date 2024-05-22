@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a5c83264c00f034a931443a40aaba92, type: 3}
   m_Name: Sevilla
   m_EditorClassIdentifier: 
-  services: {fileID: 11400000, guid: 46e9ca23fb4a77e44a6f6271ef8bc4a2, type: 2}
+  services: {fileID: 11400000, guid: 4d51e28c74945ea4d8d4ba9a700ff300, type: 2}
   luck: 0
   AlmacenCount: 0
   cityName: Sevilla
+  entrancePaid: 0
+  impuestos_arrendados: 0
+  time_impuestos: 0

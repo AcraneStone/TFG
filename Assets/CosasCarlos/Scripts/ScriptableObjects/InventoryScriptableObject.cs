@@ -7,7 +7,7 @@ using UnityEngine;
 public abstract class InventoryItem<T> where T : Item
 {
     public T itemInventory;
-
+    [HideInInspector]
     public float precio;
 
 
@@ -15,6 +15,7 @@ public abstract class InventoryItem<T> where T : Item
     public InventoryItem(T item)
     {
         itemInventory = item;
+        precio = item.precio;
     }
 
 }

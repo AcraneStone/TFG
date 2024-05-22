@@ -21,6 +21,7 @@ public class Text : CustomUIComponent
         textMeshProUGUI.color    = textSO.theme.GetTextColor(style);
         textMeshProUGUI.font     = textSO.font;
         textMeshProUGUI.fontSize = textSO.size;
+        textMeshProUGUI.alignment = TextAlignmentOptions.Center;
     }
 
 }

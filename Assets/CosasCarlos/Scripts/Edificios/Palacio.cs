@@ -2,16 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
-using static Ayuntamiento;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class Palacio : MonoBehaviour
+
+public class Palacio : Building
 {
 
     [SerializeField]
-    CitySO city;
-    public PlayerSO player;
+    //CitySO city;
+    //public PlayerSO player;
 
     public ComercioView palacioView;
     public CustomButton closeButton;
@@ -19,11 +20,24 @@ public class Palacio : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         palacioView.gameObject.SetActive(false);
         closeButton.gameObject.SetActive(false);
         modalView.gameObject.SetActive(false);
+
+        CustomButton[] buttons = palacioView.GetComponentsInChildren<CustomButton>();
+        ServiceSO licencia = AssetDatabase.LoadAssetAtPath<ServiceSO>("Assets/CosasCarlos/Scriptable Objects/Items/Servicios/Licencia_Comercio.asset");
+        buttons[0].onClick.AddListener(delegate { comprarLicencia(licencia); }) ;
+        licencia = AssetDatabase.LoadAssetAtPath<ServiceSO>("Assets/CosasCarlos/Scriptable Objects/Items/Servicios/Licencia_Venta.asset");
+        buttons[1].onClick.AddListener(delegate { comprarLicencia(licencia); });
+        licencia = AssetDatabase.LoadAssetAtPath<ServiceSO>("Assets/CosasCarlos/Scriptable Objects/Items/Servicios/Licencia_Salida.asset");
+        buttons[2].onClick.AddListener(delegate { comprarLicencia(licencia); });
+
+        closeButton.onClick.AddListener(delegate { exitView(); });
+
+
     }
 
     public void showUI()
@@ -74,5 +88,6 @@ public class Palacio : MonoBehaviour
             modalView.transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = "¡Ya tienes esta licencia!";
             showModal();
         }
+
     }
 }

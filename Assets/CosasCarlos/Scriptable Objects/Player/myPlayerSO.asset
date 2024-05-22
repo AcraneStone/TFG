@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deea300b0989eb34ba5a1bd71304d186, type: 3}
   m_Name: myPlayerSO
   m_EditorClassIdentifier: 
-  playerCurrency: {fileID: 11400000, guid: b480e31b9f64a34469bfc29443f0d6b5, type: 2}
-  playerInventory: {fileID: 11400000, guid: f4a917cbdd1c27447b3678b3178a95b3, type: 2}
-  inventoryService: {fileID: 11400000, guid: ab3a09545499ca746a17953be92fe40a, type: 2}
+  playerCurrency: {fileID: 11400000, guid: 6c4d436f24e046742a696bd6608c17c8, type: 2}
+  playerInventory: {fileID: 11400000, guid: 2aa95aab174057d4e941871febcfd919, type: 2}
+  inventoryService: {fileID: 11400000, guid: ba8a01fe7430054418d977fcd0df1442, type: 2}

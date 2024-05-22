@@ -12,7 +12,7 @@ public class InventoryServiceSO : Inventory<SerialService, ServiceSO>
     {
         SerialService found = findItem(item);
 
-        if (found != null || (found.hasService == true && found != null))
+        if (found != null || (found != null && found.hasService == true ))
         {
             // modal
         }

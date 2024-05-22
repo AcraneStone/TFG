@@ -22,6 +22,5 @@ MonoBehaviour:
   peso: 0
   soporte: 0
   cantidad: 1
-  ItemsProducibles:
-  - {fileID: 11400000, guid: e32a8f2ca2efdfc4990e46dbfb2530f8, type: 2}
+  ItemsProducibles: []
   itemsNecesarios: []

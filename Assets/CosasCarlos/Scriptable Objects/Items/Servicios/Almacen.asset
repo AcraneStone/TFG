@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b942109491c8edc47845f5e1a493f532, type: 3}
+  m_Script: {fileID: 11500000, guid: 4364e8ff3508ee642b518b08be609d7c, type: 3}
   m_Name: Almacen
   m_EditorClassIdentifier: 
   ItemName: Almacen
@@ -18,3 +18,5 @@ MonoBehaviour:
   time: -1
   benefits: 0
   type: 10
+  capacity: 800
+  available: 1

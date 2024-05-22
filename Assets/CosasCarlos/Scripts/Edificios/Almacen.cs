@@ -14,16 +14,18 @@ public enum AlmacenUI
     Modal = 2
 }
 
-public class Almacen : MonoBehaviour
+public class Almacen : Building
 {
 
     //Data
     [SerializeField]
-    CitySO city;
-    public PlayerSO player;
-    public Boolean inProperty = false;
+    //CitySO city;
+    //public PlayerSO player;
+    public bool inProperty = false;
     public AlmacenSO almacen;
     InventoryProductSO inventory;
+    double capacity = 3840;
+    double occupied;
 
     // UI 
     public ComercioView almacenView;
@@ -34,7 +36,19 @@ public class Almacen : MonoBehaviour
     //UI methods
     void Start()
     {
-        
+
+        base.Start();
+        CustomButton[] buttons = almacenView.GetComponentsInChildren<CustomButton>();
+        buttons[0].onClick.AddListener(delegate { Comprar(almacen); });
+        buttons[1].onClick.AddListener(delegate { Alquilar(almacen); });
+        buttons[2].onClick.AddListener(delegate { Construir(almacen); });
+        buttons[3].onClick.AddListener(delegate { Vender(almacen); });
+        //buttons[4].onClick.AddListener(delegate { verAlmacen(almacen); });
+
+
+
+        closeButton.onClick.AddListener(delegate { exitView(); });
+
         almacenView.gameObject.SetActive(false);
         closeButton.gameObject.SetActive(false);
         modalView.gameObject.SetActive(false);
@@ -53,20 +67,15 @@ public class Almacen : MonoBehaviour
 
     public void showModal()
     {
-        //Debug.Log("modal");
-        almacenView.gameObject.SetActive(true);
-        closeButton.gameObject.SetActive(true);
         modalView.gameObject.SetActive(true);
-        layer = AlmacenUI.Modal;
     }
 
     public void closeModal()
     {
         modalView.gameObject.SetActive(false);
-        layer = AlmacenUI.Active;
     }
 
-    public void ExitView()
+    public void exitView()
     {
         //Debug.Log(layer);
 
@@ -120,7 +129,7 @@ public class Almacen : MonoBehaviour
         SerialService license = city.services.findItem(service);
 
 
-        if (found != null && license.hasService && inProperty && license != null)
+        if (found != null && license != null  && inProperty && license.hasService)
         {
             if (player.playerCurrency.CurrencyQuantity > found.precio)
             {

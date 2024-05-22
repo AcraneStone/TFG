@@ -33,6 +33,7 @@ RectTransform:
   m_Children:
   - {fileID: 2340641406978054202}
   m_Father: {fileID: 4474553405329236125}
+  m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -129,6 +130,7 @@ RectTransform:
   - {fileID: 7778512342883978372}
   - {fileID: 6103420922764209074}
   m_Father: {fileID: 5592595073051531147}
+  m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -195,6 +197,7 @@ RectTransform:
   - {fileID: 7451519738519419997}
   - {fileID: 5592595073051531147}
   m_Father: {fileID: 0}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -292,6 +295,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4474553405329236125}
+  m_RootOrder: -2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -348,7 +352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea2a1b4e130634342994f43b679d3e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mycurrency: {fileID: 11400000, guid: b480e31b9f64a34469bfc29443f0d6b5, type: 2}
+  mycurrency: {fileID: 11400000, guid: 6c4d436f24e046742a696bd6608c17c8, type: 2}
   mycurrencyUI: {fileID: 7135529685511927322, guid: b2092572a18f61d4380d984cdb28e147,
     type: 3}
 --- !u!1001 &82965708251803278
@@ -366,6 +370,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2644905987262298857, guid: 414cdc8c5d079d74b8cc2d894c398f19,
         type: 3}
+      propertyPath: m_text
+      value: Arrendar impuestos
+      objectReference: {fileID: 0}
+    - target: {fileID: 2644905987262298857, guid: 414cdc8c5d079d74b8cc2d894c398f19,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2644905987262298857, guid: 414cdc8c5d079d74b8cc2d894c398f19,
+        type: 3}
       propertyPath: m_fontColor.b
       value: 0.028301895
       objectReference: {fileID: 0}
@@ -378,6 +392,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontColor.r
       value: 0.028301895
+      objectReference: {fileID: 0}
+    - target: {fileID: 2644905987262298857, guid: 414cdc8c5d079d74b8cc2d894c398f19,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2644905987262298857, guid: 414cdc8c5d079d74b8cc2d894c398f19,
         type: 3}
@@ -535,6 +554,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2644905987262298857, guid: 414cdc8c5d079d74b8cc2d894c398f19,
         type: 3}
+      propertyPath: m_text
+      value: Conseguir Licencias
+      objectReference: {fileID: 0}
+    - target: {fileID: 2644905987262298857, guid: 414cdc8c5d079d74b8cc2d894c398f19,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2644905987262298857, guid: 414cdc8c5d079d74b8cc2d894c398f19,
+        type: 3}
       propertyPath: m_fontColor.b
       value: 0.028301895
       objectReference: {fileID: 0}
@@ -547,6 +576,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontColor.r
       value: 0.028301895
+      objectReference: {fileID: 0}
+    - target: {fileID: 2644905987262298857, guid: 414cdc8c5d079d74b8cc2d894c398f19,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2644905987262298857, guid: 414cdc8c5d079d74b8cc2d894c398f19,
+        type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2644905987262298857, guid: 414cdc8c5d079d74b8cc2d894c398f19,
         type: 3}

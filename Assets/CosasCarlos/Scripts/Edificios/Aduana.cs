@@ -2,16 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using static UnityEditor.Progress;
 
-public class Aduana : MonoBehaviour
+public class Aduana : Building
 {
 
 
     [SerializeField]
-    CitySO city;
-    public PlayerSO player;
+    //CitySO city;
+    //public PlayerSO player = AssetDatabase.get;
     private float impuestoEntrada;
     private float impuestoSalida;
 

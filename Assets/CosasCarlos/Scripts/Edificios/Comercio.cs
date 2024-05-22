@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Comercio : MonoBehaviour
+public class Comercio : Building
 {
 
     [SerializeField]
@@ -11,7 +11,7 @@ public class Comercio : MonoBehaviour
     //[SerializeField]
     /*ublic currencySO currencyPlayer;*/
 
-    public PlayerSO player;
+    //public PlayerSO player;
 
     public CityStatsSO citystats;
 

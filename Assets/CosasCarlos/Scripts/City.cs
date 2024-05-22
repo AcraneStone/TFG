@@ -9,7 +9,7 @@ public class City : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        CSVcityStats.FillCityStats();
     }
 
     // Update is called once per frame

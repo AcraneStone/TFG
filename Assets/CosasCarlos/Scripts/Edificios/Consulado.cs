@@ -4,15 +4,15 @@ using UnityEditor;
 using UnityEditor.SearchService;
 using UnityEngine;
 
-public class Consulado : MonoBehaviour
+public class Consulado : Building
 {
     [SerializeField]
-    CitySO city;
+    //CitySO city;
     /*ublic currencySO currencyPlayer;*/
 
-    public PlayerSO player;
+    //public PlayerSO player;
 
-    public CityStatsSO citystats;
+    //public CityStatsSO citystats;
 
     public ComercioView consuladoView;
     public CustomButton closeButton;
@@ -25,7 +25,9 @@ public class Consulado : MonoBehaviour
     }
     public void Start()
     {
-        //city = AssetDatabase.
+        base.Start();
+        closeButton.onClick.AddListener(delegate { exitView(); });
+
         consuladoView.gameObject.SetActive(false);
         closeButton.gameObject.SetActive(false);
     }
@@ -38,9 +40,8 @@ public class Consulado : MonoBehaviour
 
 
 
-    public void ExitView()
+    public void exitView()
     {
-        //Debug.Log(layer);
         consuladoView.gameObject.SetActive(false);
         closeButton.gameObject.SetActive(false);
     }

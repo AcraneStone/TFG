@@ -8,5 +8,6 @@ public class PlayerSO : ScriptableObject
     public currencySO playerCurrency;
     public InventoryProductSO playerInventory;
     public InventoryServiceSO inventoryService;
+    private List<CitySO> visitedCities;
     //private List<Barcos> flota;
 }

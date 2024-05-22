@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Nuevo Barco", menuName = "ScriptableObjects/Barco")]
-public class Barcos : ScriptableObject
-{
+public class Barcos : Item 
+{ 
     // Start is called before the first frame update
     public int artilleria;
     public int soldados;
@@ -22,7 +22,7 @@ public class Barcos : ScriptableObject
     public string descripcion;
     public int capacity;
     public bool activo;//para el puerto
-    //InventoryProductSO inventario;
+    public InventoryProductSO inventario;
 
     
 }

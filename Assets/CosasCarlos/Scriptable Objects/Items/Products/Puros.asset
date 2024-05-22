@@ -23,5 +23,4 @@ MonoBehaviour:
   soporte: 0
   cantidad: 1000
   ItemsProducibles: []
-  itemsNecesarios:
-  - {fileID: 11400000, guid: 9e12dce4028a78349b7449e7826c2a59, type: 2}
+  itemsNecesarios: []
